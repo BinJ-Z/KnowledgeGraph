@@ -10,7 +10,6 @@
 
 
 from pathlib import Path
-
 import pandas as pd
 from gliner import GLiNER
 
@@ -57,15 +56,8 @@ def RelEx(
 
     input_dir = Path(input_dir)
     output_file = Path(output_file)
-
-    output_file.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    model = GLiNER.from_pretrained(
-        model_name
-    )
+    output_file.parent.mkdir( parents=True, exist_ok=True,)
+    model = GLiNER.from_pretrained( model_name)
 
     all_relations = []
 
@@ -73,9 +65,7 @@ def RelEx(
 
         print(f"Processing: {input_file.name}")
 
-        text = input_file.read_text(
-            encoding="utf-8"
-        )
+        text = input_file.read_text( encoding="utf-8")
 
         entities, relations = model.inference(
             [text],
@@ -138,9 +128,7 @@ def RelEx(
 
     if all_relations:
 
-        all_relations = pd.DataFrame(
-            all_relations
-        )
+        all_relations = pd.DataFrame( all_relations)
 
         all_relations = all_relations.drop_duplicates(
             subset=[
@@ -149,15 +137,11 @@ def RelEx(
                 "object",
                 "predicate",
             ]
-        ).reset_index(
-            drop=True
-        )
+        ).reset_index(   drop=True)
 
     else:
 
-        all_relations = pd.DataFrame(
-            columns=columns
-        )
+        all_relations = pd.DataFrame( columns=columns)
 
 
     all_relations.to_excel( output_file, index=False,)
