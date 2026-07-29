@@ -85,28 +85,22 @@ def RelEx(
             all_relations.append(
                 {
                     "pmc_id": input_file.stem,
-
                     "subject": head["text"],
-
                     "subject_type": LABEL_MAP.get(
                         head["type"],
                         head["type"],
                     ),
 
                     "object": tail["text"],
-
                     "object_type": LABEL_MAP.get(
                         tail["type"],
                         tail["type"],
                     ),
 
                     "predicate": relation["relation"],
-
                     "score": relation["score"],
-
                     "subject_start": head["start"],
                     "subject_end": head["end"],
-
                     "object_start": tail["start"],
                     "object_end": tail["end"],
                 }
@@ -129,7 +123,6 @@ def RelEx(
     if all_relations:
 
         all_relations = pd.DataFrame( all_relations)
-
         all_relations = all_relations.drop_duplicates(
             subset=[
                 "pmc_id",
@@ -151,8 +144,6 @@ def RelEx(
         f"{len(all_relations)}"
     )
 
-    print(
-        f"\nSaved to:\n{output_file}"
-    )
+    print( f"\nSaved to:\n{output_file}" )
 
     return all_relations
